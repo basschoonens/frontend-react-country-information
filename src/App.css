@@ -1,0 +1,61 @@
+.page-container{
+    border: solid 1px green;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.countries-container{
+    border: solid 1px orange;
+
+    display: flex;
+    flex-direction: row;
+
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    gap: 20px;
+}
+
+.country-cards{
+    border: solid 1px mediumpurple;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.country-flag-images{
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.blue{
+    color: blue;
+}
+
+.yellow{
+    color: yellow;
+}
+
+.red{
+    color: red;
+}
+
+.green{
+    color: green;
+}
+
+.purple{
+    color: purple;
+}
+
+button{
+    max-width: 200px;
+    margin: 50px 0;
+}
+
+ul{
+    list-style-type: none;
+}
