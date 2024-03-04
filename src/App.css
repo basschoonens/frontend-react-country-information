@@ -1,61 +1,90 @@
-.page-container{
+.page-container {
     border: solid 1px green;
     display: flex;
+
     flex-direction: column;
+    max-width: 1200px;
 
     justify-content: space-evenly;
     align-items: center;
 }
 
-.countries-container{
+.countries-container {
     border: solid 1px orange;
 
     display: flex;
     flex-direction: row;
 
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
 
     gap: 20px;
 }
 
-.country-cards{
+.country-cards {
     border: solid 1px mediumpurple;
 
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    height: 100px;
+    width: 300px;
+}
+
+.country-information {
+    display: flex;
     flex-direction: row;
+
+    justify-content: start;
+    align-items: center;
+
+    height: 50px;
 }
 
-.country-flag-images{
-    max-width: 50px;
-    max-height: 50px;
+.country-flag-images {
+    max-width: 60px;
+    max-height: 60px;
 }
 
-.blue{
+.country-title {
+    margin: 0 0 0 10px;
+}
+
+.header-image-wrapper {
+    max-width: 1200px;
+}
+
+.header-image {
+    max-width: 100%;
+}
+
+.blue {
     color: blue;
 }
 
-.yellow{
+.yellow {
     color: yellow;
 }
 
-.red{
+.red {
     color: red;
 }
 
-.green{
+.green {
     color: green;
 }
 
-.purple{
+.purple {
     color: purple;
 }
 
-button{
+button {
     max-width: 200px;
-    margin: 50px 0;
+    margin: 50px 10px;
+    padding: 5px;
 }
 
-ul{
+ul {
     list-style-type: none;
 }
