@@ -1,6 +1,7 @@
 import axios from 'axios'
 import './App.css';
 import {useState} from "react";
+import globe from "./assets/spinning-globe.jpg"
 import worldmap from "./assets/world_map.png"
 import regionColorNames from "./helpers/regionColorHelper.js";
 import sortPopulationHelper from "./helpers/sortPopulationHelper.js";
@@ -8,7 +9,9 @@ import sortPopulationHelper from "./helpers/sortPopulationHelper.js";
 function App() {
 
     const [countries, setCountries] = useState("")
-    const [country, setCountry] = useState("")
+    const [countryName, setCountryName] = useState("")
+    const [countryData, setCountryData] = useState("")
+    const [error, setError] = useState("")
 
     async function fetchAllCountries() {
         try {
@@ -21,12 +24,17 @@ function App() {
         }
     }
 
-    async function fetchNetherlands() {
+    async function fetchCountry() {
         try {
-            const result = await axios.get('https://restcountries.com/v3.1/name/netherlands');
+            setError("")
+
+            const result = await axios.get(`https://restcountries.com/v3.1/name/${countryName}`);
             console.log(result.data)
+            setCountryData(result.data)
+            setCountryName("");
         } catch (e) {
             console.error(e)
+            setError(`${countryName} bestaat niet. Probeer het opnieuw.`)
         }
     }
 
@@ -37,14 +45,11 @@ function App() {
                 <span className="header-image-wrapper">
                     <img className="header-image" src={worldmap} alt="world-map"/>
                 </span>
-                    <section className="button-section">
-                        <button type="button" onClick={fetchAllCountries}>Zoek alle landen</button>
-                        <button type="button" onClick={fetchNetherlands}>Zoek gegevens Nederland</button>
-                    </section>
+                        <button className="all-countries-button" type="button" onClick={fetchAllCountries}>Zoek alle landen</button>
                     <ul className="countries-container">
                         {countries && countries.map((country) => (
                             <li key={country.cca2}>
-                                <section className="country-cards">
+                                <section className="all-country-cards">
                                     <div className="country-information">
                                         <img className="country-flag-images"
                                              src={country.flags.png}
@@ -60,24 +65,40 @@ function App() {
                         ))}
                     </ul>
                 </section>
-              {/*  {countries &&
-                    <div>
-                        <p className={regionColorNames(countries[0].region)}>{countries[0].name.common}</p>
-                        <p>Has a population of {countries[0].population}</p>
-                        <img src={countries[0].flags.png} alt="flag"/>
-                    </div>
-                }*/}
                 <section className="individual-country-section">
                     <h1>Search country information</h1>
-                    <span>
-                        <img alt="globe"/>
+                    <span className="globe-image-wrapper">
+                        <img className="globe-image" src={globe} alt="globe"/>
                     </span>
-                    <input placeholder="Bijvoorbeeld Nederland of Peru"/><button>ZOEK</button>
-                    <div>
-                        <img alt="flag"/>
-                        <h2>Country name</h2>
-                        <p>descriptions</p>
+                    <div className="country-search-bar">
+                        <input
+                            type="text"
+                            className="single-country-input"
+                            placeholder="Bijvoorbeeld Nederland of Peru"
+                            value={countryName}
+                            onChange={(event) => setCountryName(event.target.value)}
+                        />
+                        <button
+                            type="button"
+                            className="single-country-search-button"
+                            onClick={fetchCountry}
+                        >
+                                ZOEK
+                        </button>
+                        {error && <span id="error-message">{error}</span>}
                     </div>
+                    {Object.keys(countryData).length > 0 &&
+                    <div className="single-country-card">
+                        <span className="flag-title-container">
+                            <img className="flag" src={countryData[0].flags.svg} alt="flag"/>
+                            <h2 className={regionColorNames(countryData[0].region)}>{countryData[0].name.common}</h2>
+                        </span>
+                        <p>{countryData[0].name.common} is situated in {countryData[0].subregion} and the capital is {countryData[0].capital}</p>
+                        <p>It has a population of {countryData[0].population} people {countryData[0].borders && countryData[0].borders.length > 0 ?
+                            ` and it borders with ${countryData[0].borders.length} neighboring countries` :
+                            ` and it does not share borders with other countries`}</p>
+                        <p>Websites can be found on <code>{countryData[0].tld[0]}</code> domain's</p>
+                    </div>}
                 </section>
             </main>
         </>
